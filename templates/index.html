@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SLChat - Sri Lanka News</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>SLChat - Latest Sri Lanka News</h1>
+
+    <input type="text" id="search" placeholder="Search news..." onkeyup="filterNews()">
+
+    <div id="news-container" class="news-grid"></div>
+
+    <script>
+    let allNews = [];
+
+    async function fetchNews() {
+        const res = await fetch("/api/news");
+        const data = await res.json();
+        allNews = data;
+        renderNews(allNews);
+    }
+
+    function renderNews(newsList) {
+        const container = document.getElementById("news-container");
+        container.innerHTML = "";
+        newsList.forEach(n => {
+            const card = document.createElement("div");
+            card.className = "news-card";
+            card.innerHTML = `
+                ${n.image ? `<img src="${n.image}" alt="News image">` : ''}
+                <h3><a href="${n.link}" target="_blank">${n.title}</a></h3>
+                <small>${n.published}</small>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function filterNews() {
+        const query = document.getElementById("search").value.toLowerCase();
+        const filtered = allNews.filter(n => n.title.toLowerCase().includes(query));
+        renderNews(filtered);
+    }
+
+    fetchNews();
+    setInterval(fetchNews, 60000);
+    </script>
+</body>
+</html>
