@@ -32,17 +32,24 @@ Install dependencies:
 
 pip install -r requirements.txt
 
+---
+
 ## 🔹 Clone the repository:
 
 git clone https://github.com/Subhaga2000/slchat-news.git
 cd slchat-news
+
+---
 
 ## 🔹Create a .env file in the project root:
 
 TELEGRAM_TOKEN=your_telegram_bot_token
 TELEGRAM_CHAT_ID=your_telegram_chat_id
 
+---
+
 ## 🔹Run the app:
 python app.py
+
 
 
